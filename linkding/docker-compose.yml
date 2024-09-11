@@ -1,0 +1,11 @@
+services:
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:1.31.1
+    ports:
+      - "8080:9090"
+    volumes:
+      - "./linkding:/etc/linkding/data"
+    env_file:
+      - linkding.env
+    restart: unless-stopped
