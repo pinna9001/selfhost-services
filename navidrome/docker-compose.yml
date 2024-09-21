@@ -1,0 +1,11 @@
+services:
+  navidrome:
+    image: deluan/navidrome:0.53.1
+    container_name: navidrome
+    user: 1000:1000
+    restart: unless-stopped
+    ports:
+      - "8080:4533"
+    volumes:
+      - "./navidrome:/data"
+      - "./music:/music:ro"

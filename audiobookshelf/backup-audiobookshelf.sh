@@ -27,6 +27,6 @@ rm -rf backups
 
 echo "Backup done "
 
-echo -n "Starting docker contaier: "
+echo -n "Starting docker container: "
 docker container start $container_name
 echo "Done."
