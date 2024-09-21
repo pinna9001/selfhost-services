@@ -1,0 +1,37 @@
+services:
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:v2.7.1
+    container_name: woodpecker-server
+    restart: unless-stopped
+    ports:
+      - "8080:8000"
+      - "8090:9000"
+    volumes:
+      - woodpecker-server-data:/var/lib/woodpecker
+    environment:
+      - WOODPECKER_OPEN=true
+      - WOODPECKER_ADMIN=pinna9001
+      - WOODPECKER_HOST=http://raspberrypi:8080
+      - WOODPECKER_GITEA=true
+      - WOODPECKER_GITEA_URL=http://raspberrypi:3080
+      - WOODPECKER_GITEA_CLIENT=
+      - WOODPECKER_GITEA_SECRET=
+      - WOODPECKER_AGENT_SECRET=
+
+  woodpecker-agent:
+    image: woodpeckerci/woodpecker-agent:v2.7.1
+    container_name: woodpecker-agent
+    command: agent
+    restart: unless-stopped
+    depends_on: woodpecker-server
+    volumes:
+      - woodpecker-agent-config: /etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WOODPECKER_SERVER=raspberrypi:8090
+      - WOODPECKER_AGENT_SECRET=
+      - WOODPECKER_MAX_WORKFLOWS=1
+
+volumes:
+  woodpecker-server-data:
+  woodpecker-agent-config:
