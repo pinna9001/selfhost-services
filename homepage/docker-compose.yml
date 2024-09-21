@@ -1,0 +1,12 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/hompage:v0.9.9
+    container_name: homepage
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./homepage/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /disk1:/disk1
+      - /disk2:/disk2
