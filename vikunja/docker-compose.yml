@@ -1,0 +1,15 @@
+services:
+  vikunja:
+    image: vikunja/vikunja
+    container_name: vikunja
+    restart: unless-stopped
+    ports:
+      - "8080:3456"
+    environment:
+      - VIKUNJA_SERVICE_JWTSECRET:"dasda"
+      - VIKUNJA_SERVICE_PUBLICURL:http://localhost:8080/      
+      - VIKUNJA_DATABASE_TYPE:sqlite
+      - VIKUNJA_DATABASE_PATH:/db/vikunja.db
+    volumes:
+      - ./vikunja/files:/app/vikunja/files
+      - ./vikunja/db:/db
