@@ -1,0 +1,26 @@
+services:
+  paperless-ngx-broker:
+    image: redis:7
+    container_name: paperless-ngx-broker
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  paperless-ngx-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.12.1
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      - paperless-ngx-broker
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./paperless-ngx/data:/usr/src/paperless/data
+      - ./paperless-ngx/media:/usr/src/paperless/media
+      - ./paperless-ngx/export:/usr/src/paperless/export
+      - ./paperless-ngx/consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://paperless-ngx-broker:6379
+
+volumes:
+  redisdata:
