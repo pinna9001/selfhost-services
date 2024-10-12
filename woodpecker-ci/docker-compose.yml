@@ -10,7 +10,7 @@ services:
       - woodpecker-server-data:/var/lib/woodpecker
     environment:
       - WOODPECKER_OPEN=true
-      - WOODPECKER_ADMIN=pinna9001
+      - WOODPECKER_ADMIN=admin
       - WOODPECKER_HOST=http://raspberrypi:8080
       - WOODPECKER_GITEA=true
       - WOODPECKER_GITEA_URL=http://raspberrypi:3080
@@ -23,9 +23,10 @@ services:
     container_name: woodpecker-agent
     command: agent
     restart: unless-stopped
-    depends_on: woodpecker-server
+    depends_on: 
+      - woodpecker-server
     volumes:
-      - woodpecker-agent-config: /etc/woodpecker
+      - woodpecker-agent-config:/etc/woodpecker
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - WOODPECKER_SERVER=raspberrypi:8090
