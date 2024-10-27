@@ -1,0 +1,11 @@
+services:
+  mealie:
+    image: hkotel/mealie:v2.0.0
+    container_name: mealie
+    restart: unless-stopped
+    volumes:
+      - ./mealie:/app/data
+    ports:
+      - 8080:9000
+    environment:
+      - DB_ENGINE=sqlite
